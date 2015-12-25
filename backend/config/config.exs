@@ -27,3 +27,13 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+# Guardian is used for JWT
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "Backend",
+  ttl: { 30, :days },
+  verify_issuer: true, # optional
+  secret_key: "guardian secret key",
+  serializer: Backend.GuardianSerializer
