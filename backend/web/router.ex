@@ -9,6 +9,10 @@ defmodule Backend.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :login do
+    plug :accepts, ["json"]
+  end
+  
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -18,9 +22,19 @@ defmodule Backend.Router do
 
     get "/", PageController, :index
   end
+  
+  scope "/login", Backend do
+    pipe_through :login
+    
+    post   "/", LoginController, :login
+    delete "/", LoginController, :logout
+  end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Backend do
-  #   pipe_through :api
-  # end
+  scope "/api", Backend do
+    pipe_through :api
+    
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/stuffs", StuffController, except: [:new, :edit]
+  end
+  
 end
