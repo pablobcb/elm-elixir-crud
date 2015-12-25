@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :backend, Backend.Endpoint,
-  http: [port: 4000],
+  http: [port: 8081],
   debug_errors: true,
   code_reloader: true,
   cache_static_lookup: false,
@@ -19,6 +19,7 @@ config :backend, Backend.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/gettext/.*(po)$},
       ~r{web/views/.*(ex)$},
       ~r{web/templates/.*(eex)$}
     ]
@@ -35,8 +36,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :backend, Backend.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "breno",
-  password: "magro",
-  database: "breno_crud",
+  username: "postgres",
+  password: "postgres",
+  database: "backend_dev",
   hostname: "localhost",
   pool_size: 10

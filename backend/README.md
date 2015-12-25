@@ -1,19 +1,19 @@
-# Backend
-
-To start your Phoenix app:
-
-  1. Install dependencies with `mix deps.get`
-  2. Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  3. Start Phoenix endpoint with `mix phoenix.server`
-
+# Installing Dependencies
+## Elixir
+  `sudo touch /etc/init.d/couchdb`
+  Instructions [`here`](http://elixir-lang.org/install.html)
+  
+## Phoenix
+  Instrunctions [`here`](http://www.phoenixframework.org/docs/installation)
+## Erlang   
+  `sudo apt-get install erlang erlang-dev`
+## Phoenix 
+  `apt-get install inotify-tools`
+  `mix deps.get`
+## es2015
+`npm install babel-preset-es2015`
+# Running 
+`mix phoenix.server`
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+# Migrating
+`mix ecto.migrate`

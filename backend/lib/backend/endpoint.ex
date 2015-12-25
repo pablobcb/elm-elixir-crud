@@ -33,7 +33,7 @@ defmodule Backend.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_backend_key",
-    signing_salt: "8gb3Eaiv"
+    signing_salt: "jAEyGj1E"
 
   plug Backend.Router
 end
