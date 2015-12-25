@@ -1,2 +1,2 @@
 # elm-elixir-crud
-Breno magro
+boilerplate for common tasks like auth, crud & etc
