@@ -9,3 +9,6 @@ migrate:
 
 routes:
 	mix phoenix.routes
+
+repl:
+	iex -S mix phoenix.server

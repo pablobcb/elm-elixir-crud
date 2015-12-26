@@ -15,8 +15,8 @@ defmodule Backend.Router do
   
   pipeline :api do
     plug :accepts, ["json"]
-    #plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    #plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Backend do
@@ -25,15 +25,16 @@ defmodule Backend.Router do
     get "/", PageController, :index
   end
   
-  scope "/login", Backend do
+  scope "/token", Backend do
     pipe_through :login
     
-    post   "/", LoginController, :login
-    delete "/", LoginController, :logout
+    post  "/", LoginController, :login
   end
 
   scope "/api", Backend do
     pipe_through :api
+    
+    delete "/token", LoginController, :logout
     
     resources "/users", UserController, except: [:new, :edit]
     resources "/stuffs", StuffController, except: [:new, :edit]
