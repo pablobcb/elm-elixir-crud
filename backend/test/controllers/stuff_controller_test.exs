@@ -2,7 +2,6 @@ defmodule Backend.StuffControllerTest do
   use Backend.ConnCase
 
   alias Backend.Stuff
-  alias Backend.User
   alias Backend.TestUtil
   
   @valid_attrs %{content: "some content", title: "some content"}

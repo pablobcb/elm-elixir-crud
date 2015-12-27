@@ -32,8 +32,9 @@ defmodule Backend.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.0"},
      {:phoenix_ecto, "~> 2.0"},
-     {:postgrex, ">= 0.0.0"},
+     {:postgrex, ">= 0.0.0", override: true},
      {:phoenix_html, "~> 2.3"},
+     {:guardian_db, "~>0.3.0"},
      {:guardian, "~> 0.8.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},

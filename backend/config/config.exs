@@ -32,8 +32,12 @@ config :phoenix, :generators,
 config :guardian, Guardian,
   allowed_algos: ["HS512"], # optional
   verify_module: Guardian.JWT,  # optional
+  hooks: GuardianDb,
   issuer: "Backend",
   ttl: { 3, :days },
   verify_issuer: true, # optional
   secret_key: "guardian secret key",
   serializer: Backend.GuardianSerializer
+
+config :guardian_db, GuardianDb,
+       repo: Backend.Repo

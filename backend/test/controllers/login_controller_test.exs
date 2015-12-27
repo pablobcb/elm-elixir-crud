@@ -3,13 +3,10 @@ import Backend.TestUtil
 defmodule Backend.LoginControllerTest do
   use Backend.ConnCase
   
-  alias Backend.TestUtil
-  alias Backend.User
-  
   @invalid_attrs %{email: "craa@gordo", password: "streetGordo"}
                             
   setup %{conn: conn} do
-    {:ok, conn: conn |> TestUtil.login_with_random_user}
+    {:ok, conn: conn |> login_with_random_user}
   end
   
   
@@ -24,11 +21,15 @@ defmodule Backend.LoginControllerTest do
   end
   
   test "for 204 when DELETE /login with valid credentials", %{conn: conn} do
-    conn = conn()
-    |> put_req_header("authorization", "Bearer #{conn.jwt}")
+    conn = conn
     |> delete login_path(conn, :logout)
     
     assert response(conn, 204) == ""
+    
+    conn_ = conn
+    |> get user_path(conn, :index)
+    
+    assert json_response(conn_, 401) == %{ "error" => "missing JWT in header" }
   end
   
   test "for 401 when DELETE /login with invalid credentials", %{conn: conn} do
