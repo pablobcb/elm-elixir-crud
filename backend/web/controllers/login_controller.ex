@@ -2,20 +2,18 @@ defmodule Backend.LoginController do
   use Backend.Web, :controller
 
   alias Backend.User
+  
   #TODO usar session
   def login(conn, %{ "email" => email, "password" => password}) do
     case User |> Repo.get_by(email: email, password: password) do
       user when is_map(user) ->
       
-        resp_body = case Guardian.encode_and_sign(user, :api) do
-          { :ok, jwt, claims } ->
-            %{ jwt: jwt }
-            
-          { :error, reason } ->
-            %{ error: "error generating JWT token" }
-        end
+        conn_ = conn
+        |> Guardian.Plug.sign_in(user, :api)
         
-        conn |> json resp_body
+        token = Guardian.Plug.current_token(conn_) 
+        
+        conn_ |> json %{ jwt: token }
         
       _ -> 
         conn
@@ -25,12 +23,9 @@ defmodule Backend.LoginController do
   end
   
   def logout(conn, _params) do
-    #IO.inspect Guardian.Plug.current_token(conn)
-    IO.inspect Guardian.Plug.claims(conn)
     case Guardian.Plug.claims(conn) do
       { :ok, claims } ->
-        Guardian.revoke!(Guardian.Plug.current_token(conn), claims)
-        conn
+        Guardian.Plug.sign_out(conn)
         |> put_status(:no_content)
         |> json %{}
       
@@ -39,6 +34,13 @@ defmodule Backend.LoginController do
         |> put_status(:unauthorized)
         |> json %{ "error" => "missing JWT in header" }
     end
+  end
+  
+  def unauthenticated(conn, params) do
+    IO.puts "MAGRAO$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n"
+    conn
+    |> put_status(:unauthorized)
+    |> json %{ "error" => "missing JWT in header" }
   end
   
 end

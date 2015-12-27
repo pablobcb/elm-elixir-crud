@@ -11,11 +11,14 @@ defmodule Backend.Router do
 
   pipeline :login do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
   
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    #plug Guardian.Plug.EnsureAuthenticated, handler: Backend.LoginController
     plug Guardian.Plug.LoadResource
   end
 
