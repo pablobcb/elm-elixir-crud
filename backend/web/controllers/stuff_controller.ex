@@ -13,9 +13,6 @@ defmodule Backend.StuffController do
   def create(conn, %{"stuff" => stuff_params}) do
     changeset = Stuff.changeset(%Stuff{}, stuff_params)
 
-    IO.inspect Guardian.Plug.current_token(conn)
-    IO.inspect Guardian.Plug.current_resource(conn)
-    
     case Repo.insert(changeset) do
       {:ok, stuff} ->
         conn

@@ -10,8 +10,8 @@ defmodule Backend.Router do
     plug :accepts, ["json"]
     plug :fetch_session
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    #plug Guardian.Plug.EnsureAuthenticated, handler: Backend.LoginController
     plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureAuthenticated, handler: Backend.LoginController
   end
 
   scope "/", Backend do

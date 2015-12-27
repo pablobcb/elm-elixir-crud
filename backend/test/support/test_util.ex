@@ -20,9 +20,13 @@ defmodule Backend.TestUtil do
     conn = post conn, 
       login_path(conn, :login), 
       %{email: conn.user.email, password: conn.user.password}
+     
+    token = json_response(conn, 200)["jwt"]
       
     conn() 
-    |> Map.put(:jwt, json_response(conn, 200)["jwt"])
+    |> Map.put(:user, conn.user)
+    |> Map.put(:jwt, token)
+    |> put_req_header("authorization", "Bearer #{token}")
   end
   
   def login_with_random_user(conn) do

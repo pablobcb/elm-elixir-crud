@@ -2,16 +2,17 @@ defmodule Backend.UserControllerTest do
   use Backend.ConnCase
 
   alias Backend.User
+  alias Backend.TestUtil
   @valid_attrs %{email: "some content", password: "some content", username: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, conn: conn |> TestUtil.login_with_random_user}
   end
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, user_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    assert json_response(conn, 200)
   end
 
   test "shows chosen resource", %{conn: conn} do
