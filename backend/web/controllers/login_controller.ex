@@ -3,7 +3,6 @@ defmodule Backend.LoginController do
 
   alias Backend.User
   
-  #TODO usar session
   def login(conn, %{ "email" => email, "password" => password}) do
     case User |> Repo.get_by(email: email, password: password) do
       user when is_map(user) ->
@@ -26,8 +25,7 @@ defmodule Backend.LoginController do
     case Guardian.Plug.claims(conn) do
       { :ok, claims } ->
         Guardian.Plug.sign_out(conn)
-        |> put_status(:no_content)
-        |> json %{}
+        |> send_resp(:no_content, "")
       
       _ ->
         conn
@@ -37,7 +35,6 @@ defmodule Backend.LoginController do
   end
   
   def unauthenticated(conn, params) do
-    IO.puts "MAGRAO$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n"
     conn
     |> put_status(:unauthorized)
     |> json %{ "error" => "missing JWT in header" }

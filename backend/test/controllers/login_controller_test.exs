@@ -1,35 +1,15 @@
+import Backend.TestUtil
+
 defmodule Backend.LoginControllerTest do
   use Backend.ConnCase
-
+  
+  alias Backend.TestUtil
   alias Backend.User
   
-                            
   @invalid_attrs %{email: "craa@gordo", password: "streetGordo"}
-
                             
-  def create_user(conn) do
-    user = %User{email: "brn@mgr", password: "brenoMagro", username: "bn"}
-    |> Repo.insert!
-      
-    conn 
-    |> Map.put(:user, user)
-  end
-  
-  def authethicate(conn) do
-    conn = post conn, 
-      login_path(conn, :login), 
-      %{email: conn.user.email, password: conn.user.password}
-      
-    conn() 
-    |> Map.put(:jwt, json_response(conn, 200)["jwt"])
-  end
-  
   setup %{conn: conn} do
-    {:ok, conn: conn
-      |> create_user
-      |> put_req_header( "accept", "application/json")
-      |> authethicate}
-      
+    {:ok, conn: conn |> TestUtil.login_with_random_user}
   end
   
   
@@ -48,7 +28,7 @@ defmodule Backend.LoginControllerTest do
     |> put_req_header("authorization", "Bearer #{conn.jwt}")
     |> delete login_path(conn, :logout)
     
-    assert json_response(conn, 204) == %{}
+    assert response(conn, 204) == ""
   end
   
   test "for 401 when DELETE /login with invalid credentials", %{conn: conn} do

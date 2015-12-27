@@ -15,6 +15,7 @@ defmodule Backend.StuffController do
 
     IO.inspect Guardian.Plug.current_token(conn)
     IO.inspect Guardian.Plug.current_resource(conn)
+    
     case Repo.insert(changeset) do
       {:ok, stuff} ->
         conn
