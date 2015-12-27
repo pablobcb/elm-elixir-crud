@@ -5,12 +5,13 @@ defmodule Backend.User do
     field :email, :string
     field :password, :string
     field :username, :string
+    field :activated_at, Ecto.DateTime
 
     timestamps
   end
 
   @required_fields ~w(email password username)
-  @optional_fields ~w()
+  @optional_fields ~w(activated_at)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

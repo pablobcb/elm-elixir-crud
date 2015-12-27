@@ -6,6 +6,7 @@ defmodule Backend.Repo.Migrations.CreateUser do
       add :username, :string, size: 200
       add :email, :string, size: 200
       add :password, :string, size: 130
+      add :activated_at, :datetime, default: nil
       
       timestamps
     end
