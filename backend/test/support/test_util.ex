@@ -8,12 +8,14 @@ defmodule Backend.TestUtil do
   alias Backend.User
   alias Backend.Repo
   
-  defp create_user(conn) do
-    user = %User{email: "brn@mgr", password: "brenoMagro", username: "bn"}
+  def random_user do
+    %User{email: "brn@mgr", password: "brenoMagro", username: "bn"}
     |> Repo.insert!
-      
+  end
+    
+  defp create_user(conn) do
     conn 
-    |> Map.put(:user, user)
+    |> Map.put(:user, random_user())
   end
   
   defp authethicate(conn) do

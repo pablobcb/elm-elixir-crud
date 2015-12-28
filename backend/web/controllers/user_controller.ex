@@ -44,6 +44,24 @@ defmodule Backend.UserController do
         |> render(Backend.ChangesetView, "error.json", changeset: changeset)
     end
   end
+  
+  #def update_forgotten_password(conn,
+    #%{"newPassword" => new_password, "token" => token}) do
+    
+    #user = Repo.get!(User, id)
+    #case User |> Repo.get_by(email: email, password: password) do
+    
+    #changeset = User.changeset(user, %{"password" => password})
+
+    #case Repo.update(changeset) do
+    #  {:ok, user} ->
+    #    render(conn, "show.json", user: user)
+    #  {:error, changeset} ->
+    #    conn
+    #    |> put_status(:unprocessable_entity)
+    #    |> render(Backend.ChangesetView, "error.json", changeset: changeset)
+    #end
+  #end
 
   def delete(conn, %{"id" => id}) do
     user = Repo.get!(User, id)

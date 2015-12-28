@@ -18,6 +18,8 @@ defmodule Backend.Router do
     pipe_through :open
     
     post "/token", LoginController, :login
+    post "/password-reset", LoginController, :forgot_password
+    
     post "/user", UserController, :create
   end
 

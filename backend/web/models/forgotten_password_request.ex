@@ -1,18 +1,16 @@
-defmodule Backend.User do
+defmodule Backend.ForgottenPasswordRequest do
   use Backend.Web, :model
 
-  schema "users" do
-    field :email, :string
-    field :password, :string
-    field :username, :string
-    field :activated_at, Ecto.DateTime
-    field :deleted_at, Ecto.DateTime
+  schema "forgotten_password_request" do
+    field :token, :string
+    field :created_at, Ecto.DateTime
+    belongs_to :users, Backend.User, foreign_key: :user_id
+    
 
-    timestamps
   end
 
-  @required_fields ~w(email password username)
-  @optional_fields ~w(activated_at)
+  @required_fields ~w(token user_id)
+  @optional_fields ~w(created_at)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
