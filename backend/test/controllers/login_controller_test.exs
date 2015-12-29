@@ -72,9 +72,9 @@ defmodule Backend.LoginControllerTest do
   
   test "for 404 when GET /forgot-password with invalid link", %{conn: conn} do
     conn = conn
-    |> get login_path(conn, :validate_link)
+    |> get "/password-reset/de305d54-75b4-431b-adb2-eb6b9e546014"
     
-    assert response(conn, 404) == ""
+    assert json_response(conn, 404) == %{"error" => "token not found"}
     
     assert conn.jwt |> is_binary
     
