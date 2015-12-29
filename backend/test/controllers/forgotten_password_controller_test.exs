@@ -53,8 +53,8 @@ defmodule Backend.ForgottenPasswordControllerTest do
         "new_password" => new_password }
       
     assert json_response(conn, 200)["jwt"] |> is_binary
-    assert Repo.get_by(User, password: new_password)
-    refute Repo.get_by(ForgottenPasswordRequest,
-      token: conn.forgot_password_token)
+    assert User |> Repo.get_by(password: new_password)
+    refute ForgottenPasswordRequest 
+    |> Repo.get_by(token: conn.forgot_password_token)
   end
 end

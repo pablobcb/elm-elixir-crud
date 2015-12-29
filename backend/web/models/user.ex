@@ -1,6 +1,7 @@
 defmodule Backend.User do
   use Backend.Web, :model
-
+  alias Backend.ForgottenPasswordRequest
+  
   schema "users" do
     field :email, :string
     field :password, :string

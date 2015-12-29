@@ -1,5 +1,6 @@
 defmodule Backend.ForgottenPasswordRequest do
   use Backend.Web, :model
+  
   @timestamps_opts [ usec: true ]
   @primary_key {:token, :string, read_after_writes: true}
   schema "forgotten_password_requests" do

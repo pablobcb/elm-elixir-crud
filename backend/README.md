@@ -21,9 +21,8 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 #todo
 criar cron pra apagar requests mais velhos que 1 semana
 
-criar cron que manda email
+criar cron que manda email de resetar senha
 
 criar template de email
 
-criar controller que reseta a senha (catar token no banco, se existir trocar a senha, apagar token, e gerar uma sessao nova)
-
+criar cron criar cron que manda email de novo usuario
