@@ -18,8 +18,9 @@ defmodule Backend.Router do
     pipe_through :open
     
     post "/token", LoginController, :login
-    post "/password-reset", LoginController, :create_forgot_password_request
-    get "/password-reset/:token", LoginController, :validate_link
+    post "/password-reset", ForgottenPasswordController, :create_forgot_password_request
+    put  "/password-reset", ForgottenPasswordController, :reset_password
+    get  "/password-reset/:token", ForgottenPasswordController, :validate_token
     
     
     post "/user", UserController, :create

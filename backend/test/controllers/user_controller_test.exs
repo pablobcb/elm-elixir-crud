@@ -8,7 +8,11 @@ defmodule Backend.UserControllerTest do
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    {:ok, conn: conn |> TestUtil.login_with_random_user}
+    conn_ = conn
+    |> TestUtil.login_with_random_user
+    
+    {:ok, conn: conn_
+    |> TestUtil.create_forgot_password_request}
   end
 
   test "lists all entries on index", %{conn: conn} do
@@ -60,10 +64,5 @@ defmodule Backend.UserControllerTest do
     conn = delete conn, user_path(conn, :delete, user)
     assert response(conn, 204)
     refute Repo.get(User, user.id)
-  end
-  
-  test "validates token and user password for password reset" , %{conn: conn} do
-    #password = 
-    #token = 
   end
 end

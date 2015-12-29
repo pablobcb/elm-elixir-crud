@@ -45,7 +45,7 @@ defmodule Backend.TestUtil do
     changeset = ForgottenPasswordRequest.changeset(%ForgottenPasswordRequest{},
       %{ "user_id" => conn.user.id, "token" => token})
       
-    a = Repo.insert(changeset)
+    Repo.insert!(changeset)
     
     conn
     |> Map.put(:forgot_password_token, token)

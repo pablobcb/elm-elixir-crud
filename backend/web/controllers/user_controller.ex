@@ -9,6 +9,7 @@ defmodule Backend.UserController do
     users = Repo.all(User)
     render(conn, "index.json", users: users)
   end
+  
 
   def create(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
@@ -25,11 +26,13 @@ defmodule Backend.UserController do
         |> render(Backend.ChangesetView, "error.json", changeset: changeset)
     end
   end
+  
 
   def show(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
     render(conn, "show.json", user: user)
   end
+  
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Repo.get!(User, id)
@@ -45,23 +48,6 @@ defmodule Backend.UserController do
     end
   end
   
-  #def update_forgotten_password(conn,
-    #%{"newPassword" => new_password, "token" => token}) do
-    
-    #user = Repo.get!(User, id)
-    #case User |> Repo.get_by(email: email, password: password) do
-    
-    #changeset = User.changeset(user, %{"password" => password})
-
-    #case Repo.update(changeset) do
-    #  {:ok, user} ->
-    #    render(conn, "show.json", user: user)
-    #  {:error, changeset} ->
-    #    conn
-    #    |> put_status(:unprocessable_entity)
-    #    |> render(Backend.ChangesetView, "error.json", changeset: changeset)
-    #end
-  #end
 
   def delete(conn, %{"id" => id}) do
     user = Repo.get!(User, id)

@@ -1,10 +1,10 @@
 defmodule Backend.ForgottenPasswordRequest do
   use Backend.Web, :model
-
+  @timestamps_opts [ usec: true ]
   @primary_key {:token, :string, read_after_writes: true}
   schema "forgotten_password_requests" do
     field :number_of_attempts, :integer, default: 0
-    belongs_to :users, Backend.User, foreign_key: :user_id
+    belongs_to :user, Backend.User, foreign_key: :user_id
     
     timestamps
   end
