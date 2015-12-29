@@ -7,6 +7,7 @@ defmodule Backend.TestUtil do
   use Phoenix.ConnTest
   alias Backend.User
   alias Backend.Repo
+  alias Backend.ForgottenPasswordRequest
   
   def random_user do
     %User{email: "brn@mgr.cafil", password: "brenoMagro", username: "bn"}
@@ -36,5 +37,14 @@ defmodule Backend.TestUtil do
     |> put_req_header( "accept", "application/json")
     |> create_user
     |> authethicate
+  end
+  
+  def create_forgot_password_request(conn) do
+    token = Ecto.UUID.generate()
+    %ForgottenPasswordRequest{user_id: conn.user.id, token: token}
+    |> Repo.insert!
+    
+    conn
+    |> Map.put(:forgot_password_token, token)
   end
 end

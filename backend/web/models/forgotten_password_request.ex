@@ -1,7 +1,7 @@
 defmodule Backend.ForgottenPasswordRequest do
   use Backend.Web, :model
 
-  @primary_key {:token, Ecto.UUID, read_after_writes: true}
+  @primary_key {:token, :string, read_after_writes: true}
   schema "forgotten_password_requests" do
     field :created_at, Ecto.DateTime
     field :number_of_attempts, :integer

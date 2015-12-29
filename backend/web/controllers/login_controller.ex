@@ -52,13 +52,8 @@ defmodule Backend.LoginController do
         from(r in ForgottenPasswordRequest, where: r.user_id == ^user.id )
         |> Repo.delete_all
         
-        #generate token
-        token = Ecto.UUID.generate()
-        
-        #persist token
-        params = %{ "user_id" => user.id, "token" => token }
-        
-        changeset = ForgottenPasswordRequest.changeset(%ForgottenPasswordRequest{}, params)
+        changeset = ForgottenPasswordRequest.changeset(%ForgottenPasswordRequest{},
+          %{ "user_id" => user.id, "token" => Ecto.UUID.generate()})
           
         case Repo.insert(changeset) do
           {:ok, forgotten_password_request} ->

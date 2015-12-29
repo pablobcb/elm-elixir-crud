@@ -3,7 +3,7 @@ defmodule Backend.ForgottenPasswordRequestTest do
 
   alias Backend.ForgottenPasswordRequest
   
-  @valid_attrs %{token: "some content", user_id: 10}
+  @valid_attrs %{token: "de305d54-75b4-431b-adb2-eb6b9e546014", user_id: 10}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

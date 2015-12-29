@@ -3,10 +3,17 @@ import Backend.TestUtil
 defmodule Backend.LoginControllerTest do
   use Backend.ConnCase
   
+  alias Backend.ForgottenPasswordRequest
+  
   @invalid_attrs %{email: "craa@gordo", password: "streetGordo"}
                             
+  
   setup %{conn: conn} do
-    {:ok, conn: conn |> login_with_random_user}
+    conn_ = conn
+    |> login_with_random_user
+    
+    {:ok, conn: conn_
+    |> create_forgot_password_request}
   end
   
   
@@ -41,34 +48,35 @@ defmodule Backend.LoginControllerTest do
   
   test "for 201 when POST /forgot-password with valid email", %{conn: conn} do
     conn = conn
-    |> post login_path(conn, :forgot_password), %{"email" => conn.user.email}
+    |> post login_path(conn, :create_forgot_password_request), %{"email" => conn.user.email}
     
     assert response(conn, 201) == ""
   end
   
-  test "for 404 when POST /forgot-password with invalid email" %{conn: conn} do
+  test "for 404 when POST /forgot-password with invalid email", %{conn: conn} do
     conn = conn
-    |> post login_path(conn, :forgot_password), %{"email" => "street@craa"}
+    |> post login_path(conn, :create_forgot_password_request), %{"email" => "street@craa.com"}
     
     assert json_response(conn, 404) == %{"error" => "email not found"}
     
   end
   
-  test "for 201 when GET /forgot-password with valid link" %{conn: conn} do
+  test "for 201 when GET /forgot-password with valid link", %{conn: conn} do
+    
     conn = conn
-    |> get login_path(conn, :validate_link)
+    |> get "/password-reset/#{conn.forgot_password_token}"
     
     assert response(conn, 200) == ""
     
   end
-  #
-  #test "for 404 when GET /forgot-password with invalid link" do
-  #  conn = conn
-  #  |> get login_path(conn, :validate_link)
-  #  
-  #  assert (conn, 404) == ""
-  #  
-  #  assert conn.jwt |> is_binary
-  #  
-  #end
+  
+  test "for 404 when GET /forgot-password with invalid link", %{conn: conn} do
+    conn = conn
+    |> get login_path(conn, :validate_link)
+    
+    assert response(conn, 404) == ""
+    
+    assert conn.jwt |> is_binary
+    
+  end
 end
