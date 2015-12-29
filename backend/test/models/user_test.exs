@@ -3,7 +3,7 @@ defmodule Backend.UserTest do
 
   alias Backend.User
 
-  @valid_attrs %{email: "some content", password: "some content", username: "some content"}
+  @valid_attrs %{email: "some@content.com", password: "some content", username: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

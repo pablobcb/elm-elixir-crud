@@ -39,4 +39,20 @@ defmodule Backend.LoginControllerTest do
     
     assert json_response(conn, 401) == %{ "error" => "missing JWT in header" }
   end
+  
+  test "for 201 when POST /forgot-password with valid email", %{conn: conn} do
+    conn = conn
+    |> post login_path(conn, :forgot_password), %{"email" => conn.user.email}
+    
+    assert response(conn, 201) == ""
+  end
+  
+  test "for 404 when POST /forgot-password with invalid email" do
+    conn = conn
+    |> post login_path(conn, :forgot_password), %{"email" => "street@craa"}
+    
+    assert json_response(conn, 404) == %{"error" => "email not found"}
+    
+  end
+  
 end

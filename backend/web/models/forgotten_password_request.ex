@@ -1,12 +1,10 @@
 defmodule Backend.ForgottenPasswordRequest do
   use Backend.Web, :model
 
-  schema "forgotten_password_request" do
-    field :token, :string
+  @primary_key {:token, :string, read_after_writes: true}
+  schema "forgotten_password_requests" do
     field :created_at, Ecto.DateTime
     belongs_to :users, Backend.User, foreign_key: :user_id
-    
-
   end
 
   @required_fields ~w(token user_id)

@@ -3,7 +3,8 @@ defmodule Backend.UserControllerTest do
 
   alias Backend.User
   alias Backend.TestUtil
-  @valid_attrs %{email: "some content", password: "some content", username: "some content"}
+  
+  @valid_attrs %{email: "some@content.com", password: "some content", username: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do

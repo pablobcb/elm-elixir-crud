@@ -9,7 +9,7 @@ defmodule Backend.TestUtil do
   alias Backend.Repo
   
   def random_user do
-    %User{email: "brn@mgr", password: "brenoMagro", username: "bn"}
+    %User{email: "brn@mgr.cafil", password: "brenoMagro", username: "bn"}
     |> Repo.insert!
   end
     

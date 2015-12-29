@@ -44,36 +44,36 @@ defmodule Backend.LoginController do
   end
   
   
-  def forgot_password(conn, %{ "email" => email}) do
+  def forgot_password(conn, %{ "email" => email }) do
     case User |> Repo.get_by(email: email) do
       user when is_map(user) ->
         #remove all previous forgotten password requests
-        from(r in ForgottenPasswordRequests, where: r.user_id == ^user.id )
+        from(r in ForgottenPasswordRequest, where: r.user_id == ^user.id )
         |> Repo.delete_all
         
         #generate token
-        token = SecureRandom.uuid
+        token = Ecto.UUID.generate()
         
         #persist token
-        params = %{ "user_id" => user.id, "token" => token}
+        params = %{ "user_id" => user.id, "token" => token }
         
-        changeset = ForgottenPasswordRequest.changeset(
-          %ForgottenPasswordRequest{}, params)
-
+        changeset = ForgottenPasswordRequest.changeset(%ForgottenPasswordRequest{}, params)
+          
         case Repo.insert(changeset) do
-          {:ok, forgotten_password_requests} ->
-            conn |> send_resp 200, "Ok"
+          {:ok, forgotten_password_request} ->
+            conn |> send_resp 201, ""
             
           {:error, changeset} ->
             conn
             |> put_status(:unprocessable_entity)
             |> json %{ error: "oops! something went wrong on our server" }
+            
         end
         
         
       _ -> 
         conn
-        |> put_status(:unprocessable_entity)
+        |> put_status(:not_found)
         |> json %{ error: "email not found" }
     end
   end

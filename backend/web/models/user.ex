@@ -12,7 +12,7 @@ defmodule Backend.User do
   end
 
   @required_fields ~w(email password username)
-  @optional_fields ~w(activated_at)
+  @optional_fields ~w(activated_at deleted_at)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -23,5 +23,6 @@ defmodule Backend.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_format(:email, ~r/@/)
   end
 end
