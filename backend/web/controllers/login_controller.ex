@@ -6,14 +6,15 @@ defmodule Backend.LoginController do
   
   def login(conn, %{ "email" => email, "password" => password}) do
     case User |> Repo.get_by(email: email, password: password) do
+    
       user when is_map(user) ->
-      
         conn_ = conn
         |> Guardian.Plug.sign_in(user, :api)
         
-        token = Guardian.Plug.current_token(conn_) 
+        jwt_token = Guardian.Plug.current_token(conn_)
         
-        conn_ |> json %{ jwt: token }
+        conn_ 
+        |> json %{ jwt: jwt_token }
         
       _ -> 
         conn
@@ -44,7 +45,7 @@ defmodule Backend.LoginController do
   end
   
   
-  def forgot_password(conn, %{ "email" => email }) do
+  def create_forgot_password_request(conn, %{ "email" => email }) do
     case User |> Repo.get_by(email: email) do
       user when is_map(user) ->
         #remove all previous forgotten password requests
@@ -70,11 +71,27 @@ defmodule Backend.LoginController do
             
         end
         
-        
       _ -> 
         conn
         |> put_status(:not_found)
         |> json %{ error: "email not found" }
     end
   end
+  
+  def validate_link(conn,  %{"token" => token}) do
+    result = ForgottenPasswordRequest 
+    |> Repo.get_by(token: token) # verificar validade do token
+    
+    case result do 
+      forgotten_password_request when is_map(forgotten_password_request) ->
+        conn |> send_resp(200, "")
+      
+      _ -> 
+        conn
+        |> put_status(:not_found)
+        |> json %{ error: "token not found" }
+        
+    end
+  end
+  
 end

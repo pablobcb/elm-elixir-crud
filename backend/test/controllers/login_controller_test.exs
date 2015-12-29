@@ -11,7 +11,6 @@ defmodule Backend.LoginControllerTest do
   
   
   test "for 200 when POST /login with valid credentials", %{conn: conn} do
-    assert conn.jwt
     assert conn.jwt |> is_binary
   end
 
@@ -47,7 +46,7 @@ defmodule Backend.LoginControllerTest do
     assert response(conn, 201) == ""
   end
   
-  test "for 404 when POST /forgot-password with invalid email" do
+  test "for 404 when POST /forgot-password with invalid email" %{conn: conn} do
     conn = conn
     |> post login_path(conn, :forgot_password), %{"email" => "street@craa"}
     
@@ -55,4 +54,21 @@ defmodule Backend.LoginControllerTest do
     
   end
   
+  test "for 201 when GET /forgot-password with valid link" %{conn: conn} do
+    conn = conn
+    |> get login_path(conn, :validate_link)
+    
+    assert response(conn, 200) == ""
+    
+  end
+  #
+  #test "for 404 when GET /forgot-password with invalid link" do
+  #  conn = conn
+  #  |> get login_path(conn, :validate_link)
+  #  
+  #  assert (conn, 404) == ""
+  #  
+  #  assert conn.jwt |> is_binary
+  #  
+  #end
 end
