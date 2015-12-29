@@ -7,6 +7,7 @@ defmodule Backend.Repo.Migrations.CreateForgottenPasswordRequests do
       add :token, :string, primary_key: true
       add :created_at, :datetime, default: fragment("now()")
       add :user_id, references(:users)
+      add :number_of_attempts, :integer, default: 0
 
     end
 
