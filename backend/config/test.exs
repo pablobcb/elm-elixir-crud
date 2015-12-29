@@ -6,8 +6,8 @@ config :backend, Backend.Endpoint,
   http: [port: 8081],
   server: false
 
-# Print only warnings and errors during test
 config :logger, level: :warn
+#config :logger, :console, format: "[$level] $message\n"
 
 # Configure your database
 config :backend, Backend.Repo,

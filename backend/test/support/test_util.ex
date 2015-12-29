@@ -41,8 +41,11 @@ defmodule Backend.TestUtil do
   
   def create_forgot_password_request(conn) do
     token = Ecto.UUID.generate()
-    %ForgottenPasswordRequest{user_id: conn.user.id, token: token}
-    |> Repo.insert!
+    
+    changeset = ForgottenPasswordRequest.changeset(%ForgottenPasswordRequest{},
+      %{ "user_id" => conn.user.id, "token" => token})
+      
+    a = Repo.insert(changeset)
     
     conn
     |> Map.put(:forgot_password_token, token)

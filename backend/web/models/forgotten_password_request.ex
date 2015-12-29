@@ -3,13 +3,14 @@ defmodule Backend.ForgottenPasswordRequest do
 
   @primary_key {:token, :string, read_after_writes: true}
   schema "forgotten_password_requests" do
-    field :created_at, Ecto.DateTime
-    field :number_of_attempts, :integer
+    field :number_of_attempts, :integer, default: 0
     belongs_to :users, Backend.User, foreign_key: :user_id
+    
+    timestamps
   end
 
   @required_fields ~w(token user_id)
-  @optional_fields ~w(created_at number_of_attempts)
+  @optional_fields ~w(number_of_attempts)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

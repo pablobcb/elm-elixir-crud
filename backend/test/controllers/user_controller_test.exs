@@ -62,7 +62,7 @@ defmodule Backend.UserControllerTest do
     refute Repo.get(User, user.id)
   end
   
-  test "validates password recovery token and renders JWT auth token" , %{conn: conn} do
+  test "validates token and user password for password reset" , %{conn: conn} do
     #password = 
     #token = 
   end

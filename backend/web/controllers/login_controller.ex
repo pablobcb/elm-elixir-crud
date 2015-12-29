@@ -74,9 +74,13 @@ defmodule Backend.LoginController do
   end
   
   def validate_link(conn,  %{"token" => token}) do
-    result = ForgottenPasswordRequest 
-    |> Repo.get_by(token: token) # verificar validade do token
-    
+    now = Ecto.DateTime.utc(:usec)
+    result =  Repo.one(
+      from r in ForgottenPasswordRequest,
+      where: r.inserted_at < ^now and r.token == ^token,
+      #where: (^now - r.inserted_at) < 30  and r.token == ^token,
+      select: r)
+      
     case result do 
       forgotten_password_request when is_map(forgotten_password_request) ->
         conn |> send_resp(200, "")
