@@ -77,10 +77,10 @@ defmodule Backend.LoginController do
     now = Ecto.DateTime.utc(:usec)
     result =  Repo.one(
       from r in ForgottenPasswordRequest,
-      where: r.inserted_at < ^now and r.token == ^token,
-      #where: (^now - r.inserted_at) < 30  and r.token == ^token,
+      #where: r.inserted_at < ^now and r.token == ^token,
+      where: datetime_add(^now, -30, "day") < r.inserted_at and r.token == ^token,
       select: r)
-      
+    
     case result do 
       forgotten_password_request when is_map(forgotten_password_request) ->
         conn |> send_resp(200, "")

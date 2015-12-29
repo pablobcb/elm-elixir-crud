@@ -70,10 +70,10 @@ defmodule Backend.LoginControllerTest do
     
   end
   
-  #test "for 404 when GET /forgot-password with invalid link", %{conn: conn} do
-  #  conn = conn
-  #  |> get "/password-reset/de305d54-75b4-431b-adb2-eb6b9e546014"
-  #  
-  #  assert json_response(conn, 404) == %{"error" => "token not found"}
-  #end
+  test "for 404 when GET /forgot-password with invalid link", %{conn: conn} do
+    conn = conn
+    |> get "/password-reset/de305d54-75b4-431b-adb2-eb6b9e546014"
+    
+    assert json_response(conn, 404) == %{"error" => "token not found"}
+  end
 end
