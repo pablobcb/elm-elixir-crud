@@ -13,6 +13,7 @@ defmodule Backend do
       supervisor(Backend.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Backend.Worker, [arg1, arg2, arg3]),
+      worker(Backend.DeleteOldForgotPasswordRequestsWorker, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

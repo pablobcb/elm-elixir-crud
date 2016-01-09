@@ -7,10 +7,11 @@ defmodule Backend.ForgottenPasswordController do
   defp validate_token_ (token) do
     now = Ecto.DateTime.utc()
     Repo.one(
-      from(r in ForgottenPasswordRequest,
+      from r in ForgottenPasswordRequest,
+      #TODO: put -30 in constant
       where: datetime_add(^now, -30, "day") < r.inserted_at 
       and r.token == ^token, 
-      select: r) 
+      select: r
     )
   end
   

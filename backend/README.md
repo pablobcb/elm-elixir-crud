@@ -19,10 +19,16 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 `mix ecto.migrate`
 
 #todo
-criar cron pra apagar requests mais velhos que 1 semana
+escrever teste pra  cron pra apagar requests mais velhos que 1 semana
 
 criar cron que manda email de resetar senha
 
 criar template de email
 
 criar cron criar cron que manda email de novo usuario
+
+servico que valida o usuario
+
+colocar paginacao nos select
+
+mover tempo do email pra constantes

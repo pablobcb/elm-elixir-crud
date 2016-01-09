@@ -12,3 +12,6 @@ routes:
 
 repl:
 	iex -S mix phoenix.server
+	
+reset:
+	mix ecto.reset
